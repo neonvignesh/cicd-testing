@@ -48,16 +48,16 @@ pipeline {
     stage('Update Deployment File') {
         environment {
             GIT_REPO_NAME = "cicd-testing"
-            GIT_USER_NAME = "neonvignesh"
-            BUILD_OLD=$((BUILD_NUMBER - 1))
+        GIT_USER_NAME = "neonvignesh"
+        BUILD_OLD = BUILD_NUMBER.toInteger() - 1
+        NEW_BUILD_NUMBER = "${JOB_NAME}-${BUILD_NUMBER}"
         }
         steps {
             withCredentials([string(credentialsId: 'github', variable: 'GITHUB_TOKEN')]) {
                 sh '''
                     git config user.email "vigneshns47@gmail.com"
                     git config user.name "kubernets"
-                    BUILD_NUMBER=${JOB_NAME}-${BUILD_NUMBER}
-                    sed -i "s/${JOB_NAME}-${BUILD_OLD}/${BUILD_NUMBER}/g" java-maven-sonar-argocd-helm-k8s/spring-boot-app-manifests/deployment.yml
+                    sed -i "s/${JOB_NAME}-${BUILD_OLD}/${NEW_BUILD_NUMBER}/g" java-maven-sonar-argocd-helm-k8s/spring-boot-app-manifests/deployment.yml
                     git add java-maven-sonar-argocd-helm-k8s/spring-boot-app-manifests/deployment.yml
                     git commit -m "Update deployment image to version ${BUILD_NUMBER}"
                     git push https://${GITHUB_TOKEN}@github.com/${GIT_USER_NAME}/${GIT_REPO_NAME} HEAD:main
