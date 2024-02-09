@@ -51,7 +51,7 @@ pipeline {
         GIT_USER_NAME = "neonvignesh"
         int temp = env.BUILD_NUMBER
         BUILD_OLD = temp - 1
-        #BUILD_OLD = "${BUILD_NUMBER}".toInteger() + 1
+        //BUILD_OLD = "${BUILD_NUMBER}".toInteger() + 1
         NEW_BUILD_NUMBER = "${JOB_NAME}-${BUILD_NUMBER}"
         }
         steps {
