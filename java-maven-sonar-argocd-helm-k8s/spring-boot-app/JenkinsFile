@@ -49,7 +49,7 @@ pipeline {
         environment {
             GIT_REPO_NAME = "cicd-testing"
         GIT_USER_NAME = "neonvignesh"
-        int temp = env.BUILD_NUMBER
+        int temp = ${BUILD_NUMBER}
         BUILD_OLD = temp - 1
         //BUILD_OLD = "${BUILD_NUMBER}".toInteger() + 1
         NEW_BUILD_NUMBER = "${JOB_NAME}-${BUILD_NUMBER}"
